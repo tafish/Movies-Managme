@@ -15,6 +15,7 @@ namespace Movies.Domain.Entity
         public int UserId { get; set; }       
         public int MovieId { get; set; }     
         public User User { get; set; }        
-        public Movie Movie { get; set; }     
+        public Movie Movie { get; set; }
+        public ICollection<Like> Likes { get; set; }
     }
 }
