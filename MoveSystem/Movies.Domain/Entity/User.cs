@@ -15,6 +15,7 @@ namespace Movies.Domain.Entity
         public string? Password { get; set; }
         public int Age { get; set; }
         public ICollection<RoleUser> RoleUser { get; set; } = new List<RoleUser>();
+        public ICollection<Reviews> Reviews { get; set; } = new List<Reviews>();
     }
 }
 

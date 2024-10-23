@@ -24,20 +24,62 @@ namespace Ecommerce.Infrastructure.Presistance
         public DbSet<Role> Roles { get; set; }
         public DbSet<RolePermissions> RolePermissions { get; set; }
         public DbSet<RoleUser> RoleUsers { get; set; }
-      
+        public DbSet<Reviews> Reviews { get; set; }
 
 
 
 
-       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<RolePermissions>()
                 .HasKey(rp => new { rp.RoleId, rp.PermissionId });
 
             modelBuilder.Entity<RoleUser>()
-           .HasKey(ru => new { ru.RoleId, ru.UserId });  // أو HasNoKey()
+           .HasKey(ru => new { ru.RoleId, ru.UserId });  
 
+
+
+            modelBuilder.Entity<Reviews>()
+           .HasOne(r => r.User)
+           .WithMany(u => u.Reviews)
+           .HasForeignKey(r => r.UserId)
+           .OnDelete(DeleteBehavior.NoAction);  
+
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<RoleUser>()
+          .HasOne(ur => ur.Role)
+          .WithMany(r => r.RoleUser)
+          .HasForeignKey(ur => ur.RoleId)
+          .OnDelete(DeleteBehavior.NoAction);  
+
+            base.OnModelCreating(modelBuilder);
+
+
+            modelBuilder.Entity<RolePermissions>()
+           .HasOne(rp => rp.Permissions)
+           .WithMany(p => p.RolePermissions)
+           .HasForeignKey(rp => rp.PermissionId)
+           .OnDelete(DeleteBehavior.NoAction);  
+
+            base.OnModelCreating(modelBuilder);
+
+
+            modelBuilder.Entity<Movie>()
+          .HasOne(m => m.category)
+          .WithMany(c => c.Movies)
+          .HasForeignKey(m => m.CategoryId)
+          .OnDelete(DeleteBehavior.NoAction);  
+
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Reviews>()
+            .HasOne(r => r.Movie)
+            .WithMany(m => m.Reviews)
+            .HasForeignKey(r => r.MovieId)
+            .OnDelete(DeleteBehavior.NoAction);  
+
+            base.OnModelCreating(modelBuilder);
         }
 
 

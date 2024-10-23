@@ -16,7 +16,7 @@ namespace Movies.Domain.Entity
         public bool IsFree { get; set; }
         public int CategoryId { get; set; }
         public Category? category { get; set; }
-
+        public ICollection<Reviews> Reviews { get; set; } = new List<Reviews>();
 
 
 
