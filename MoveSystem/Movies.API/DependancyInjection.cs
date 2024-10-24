@@ -1,6 +1,10 @@
 ﻿
+using Ecommerce.Application.Automapper;
+using Ecommerce.Application.Contracts.Interface;
+using Ecommerce.Application.Contracts.Services;
+using Ecommerce.Application.Repository;
 using Ecommerce.Infrastructure.Presistance;
-
+using Ecommerce.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.API
@@ -12,11 +16,17 @@ namespace Ecommerce.API
             services.AddDbContext<DBContextApplication>(options =>
                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-           
+
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 
 
 
+
+
+
+            services.AddAutoMapper(typeof(CategoryProfile).Assembly);
             return services;
         }
 
